@@ -1,16 +1,16 @@
-import React from 'react'
+import React from "react";
 
 //Interface Props
 
-const About: React.FC<Props> = () => {
-    //State
-    
-    //Methods
-    
-    //Template
-    return (
-        
-    )
-}
+const About: React.FC = () => {
+	//State
 
-export default About
+	//Methods
+
+	//Template
+	return (
+		<h1>About Page</h1>
+	);
+};
+
+export default About;

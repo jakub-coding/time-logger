@@ -31,8 +31,10 @@
     "dependencies": {
         "@inertiajs/inertia": "^0.8.2",
         "@inertiajs/inertia-react": "^0.5.1",
+        "@types/moment": "^2.13.0",
         "@types/react": "^17.0.0",
         "react": "^17.0.1",
-        "react-dom": "^17.0.1"
+        "react-dom": "^17.0.1",
+        "react-moment": "^1.1.1"
     }
 }

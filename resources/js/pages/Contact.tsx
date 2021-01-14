@@ -1,16 +1,16 @@
-import React from 'react'
+import React from "react";
 
 //Interface Props
 
-const Contact: React.FC<Props> = () => {
-    //State
-    
-    //Methods
-    
-    //Template
-    return (
-        
-    )
-}
+const Contact: React.FC = () => {
+	//State
 
-export default Contact
+	//Methods
+
+	//Template
+	return (
+		<h1>Contact</h1>
+	);
+};
+
+export default Contact;

@@ -21,6 +21,7 @@
         "@typescript-eslint"
     ],
     "rules": {
+        "react/prop-types": 0,
         "no-undef": 0,
         "indent": [
             "error",

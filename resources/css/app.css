@@ -1,3 +1,27 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+
+.primary-nav-link {
+	@apply py-2 w-full border-2 border-gray-100 text-center text-gray-100 rounded mb-4
+}
+
+.list-title {
+	@apply mb-2 text-2xl text-gray-100 uppercase
+}
+
+.stat-list {
+	@apply mb-8 text-gray-400 pl-4
+}
+
+.stat-list-item {
+	@apply mb-2 text-xl
+}
+
+.control-button-green {
+	@apply w-48 h-48 rounded-full bg-green-500 text-gray-100 font-bold text-2xl
+}
+
+.control-button-red {
+	@apply w-48 h-48 rounded-full bg-red-500 text-gray-100 font-bold text-2xl
+}
