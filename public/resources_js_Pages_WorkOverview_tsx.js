@@ -1,47 +1,13 @@
-(self["webpackChunk"] = self["webpackChunk"] || []).push([["resources_js_Pages_Home_tsx"],{
+(self["webpackChunk"] = self["webpackChunk"] || []).push([["resources_js_Pages_WorkOverview_tsx"],{
 
-/***/ "./resources/js/Pages/Home.tsx":
-/*!*************************************!*\
-  !*** ./resources/js/Pages/Home.tsx ***!
-  \*************************************/
+/***/ "./resources/js/Pages/WorkOverview.tsx":
+/*!*********************************************!*\
+  !*** ./resources/js/Pages/WorkOverview.tsx ***!
+  \*********************************************/
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
 
-
-var __createBinding = this && this.__createBinding || (Object.create ? function (o, m, k, k2) {
-  if (k2 === undefined) k2 = k;
-  Object.defineProperty(o, k2, {
-    enumerable: true,
-    get: function get() {
-      return m[k];
-    }
-  });
-} : function (o, m, k, k2) {
-  if (k2 === undefined) k2 = k;
-  o[k2] = m[k];
-});
-
-var __setModuleDefault = this && this.__setModuleDefault || (Object.create ? function (o, v) {
-  Object.defineProperty(o, "default", {
-    enumerable: true,
-    value: v
-  });
-} : function (o, v) {
-  o["default"] = v;
-});
-
-var __importStar = this && this.__importStar || function (mod) {
-  if (mod && mod.__esModule) return mod;
-  var result = {};
-  if (mod != null) for (var k in mod) {
-    if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-  }
-
-  __setModuleDefault(result, mod);
-
-  return result;
-};
 
 var __importDefault = this && this.__importDefault || function (mod) {
   return mod && mod.__esModule ? mod : {
@@ -53,55 +19,21 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 
-var react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js")); //Import Layout
+var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+var MasterLayout_1 = __importDefault(__webpack_require__(/*! ../layouts/MasterLayout */ "./resources/js/layouts/MasterLayout.tsx")); //Interface Props
 
 
-var MasterLayout_1 = __importDefault(__webpack_require__(/*! ../layouts/MasterLayout */ "./resources/js/layouts/MasterLayout.tsx")); //Import ChildComponents
-
-
-var HomeStartControls_1 = __importDefault(__webpack_require__(/*! ../components/HomeStartControls */ "./resources/js/components/HomeStartControls.tsx"));
-
-var HomeWorkStats_1 = __importDefault(__webpack_require__(/*! ../components/HomeWorkStats */ "./resources/js/components/HomeWorkStats.tsx"));
-
-var HomeWorkPlans_1 = __importDefault(__webpack_require__(/*! ../components/HomeWorkPlans */ "./resources/js/components/HomeWorkPlans.tsx"));
-
-var Home = function Home(props) {
-  //Extracting Props to different variables
-  var user = props.user,
-      last_log = props.last_log; //State
-
-  var _a = react_1.useState(""),
-      logStatus = _a[0],
-      setLogStatus = _a[1]; //Methods
-
-
-  react_1.useEffect(function () {
-    // console.log(user, last_log);
-    checkLastLog();
-  }, []);
-
-  var checkLastLog = function checkLastLog() {
-    if (last_log.log_status === "stop") {
-      setLogStatus("start");
-    }
-
-    if (last_log.log_status === "start") {
-      setLogStatus("stop");
-    }
-  }; //Template
-
-
+var WorkOverview = function WorkOverview() {
+  //State
+  //Methods
+  //Template
   return react_1["default"].createElement(MasterLayout_1["default"], {
-    user: user,
-    title: "Work-logger Dashboard"
-  }, react_1["default"].createElement("div", {
-    className: "grid grid-cols-6 gap-4"
-  }, react_1["default"].createElement(HomeStartControls_1["default"], {
-    logStatus: logStatus
-  }), react_1["default"].createElement(HomeWorkStats_1["default"], null), react_1["default"].createElement(HomeWorkPlans_1["default"], null)));
+    title: "Work Overview"
+  }, react_1["default"].createElement("h1", null, "this is work overview page"));
 };
 
-exports.default = Home;
+exports.default = WorkOverview;
 
 /***/ }),
 
@@ -225,210 +157,6 @@ var AsideNavigationUserInfo = function AsideNavigationUserInfo(props) {
 };
 
 exports.default = AsideNavigationUserInfo;
-
-/***/ }),
-
-/***/ "./resources/js/components/HomeStartControls.tsx":
-/*!*******************************************************!*\
-  !*** ./resources/js/components/HomeStartControls.tsx ***!
-  \*******************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var __createBinding = this && this.__createBinding || (Object.create ? function (o, m, k, k2) {
-  if (k2 === undefined) k2 = k;
-  Object.defineProperty(o, k2, {
-    enumerable: true,
-    get: function get() {
-      return m[k];
-    }
-  });
-} : function (o, m, k, k2) {
-  if (k2 === undefined) k2 = k;
-  o[k2] = m[k];
-});
-
-var __setModuleDefault = this && this.__setModuleDefault || (Object.create ? function (o, v) {
-  Object.defineProperty(o, "default", {
-    enumerable: true,
-    value: v
-  });
-} : function (o, v) {
-  o["default"] = v;
-});
-
-var __importStar = this && this.__importStar || function (mod) {
-  if (mod && mod.__esModule) return mod;
-  var result = {};
-  if (mod != null) for (var k in mod) {
-    if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-  }
-
-  __setModuleDefault(result, mod);
-
-  return result;
-};
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-
-var react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-
-var HomeStartControls = function HomeStartControls(props) {
-  var logStatus = props.logStatus; //State
-  //Methods
-
-  react_1.useEffect(function () {
-    console.log(logStatus);
-  }, []);
-
-  var onButtonClick = function onButtonClick() {
-    console.log(logStatus);
-  }; //Template
-
-
-  return react_1["default"].createElement("article", {
-    className: "col-span-3 start-controls flex flex-col justify-start items-center p-4"
-  }, react_1["default"].createElement("h1", {
-    className: "text-4xl text-gray-100 mb-4 text-center"
-  }, "Start / Stop ", react_1["default"].createElement("br", null), " Logger Controls"), react_1["default"].createElement("button", {
-    onClick: onButtonClick,
-    className: logStatus === "start" ? "control-button-green" : "control-button-red"
-  }, logStatus), react_1["default"].createElement("h1", {
-    className: "text-gray-100 font-bold text-4xl mt-4"
-  }, "00 : 00 : 00"));
-};
-
-exports.default = HomeStartControls;
-
-/***/ }),
-
-/***/ "./resources/js/components/HomeWorkPlans.tsx":
-/*!***************************************************!*\
-  !*** ./resources/js/components/HomeWorkPlans.tsx ***!
-  \***************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var __importDefault = this && this.__importDefault || function (mod) {
-  return mod && mod.__esModule ? mod : {
-    "default": mod
-  };
-};
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-
-var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js")); //Interface Props
-
-
-var HomeWorkPlans = function HomeWorkPlans() {
-  //State
-  //Methods
-  //Template
-  return react_1["default"].createElement("article", {
-    className: "work-planner col-span-6 mt-8"
-  }, react_1["default"].createElement("div", {
-    className: "planner w-full mb-4"
-  }, react_1["default"].createElement("div", {
-    className: "title"
-  }, react_1["default"].createElement("h1", {
-    className: "text-pink-800 font-bold text-xl"
-  }, "Working plan:")), react_1["default"].createElement("div", {
-    className: "content flex justify-start items-center"
-  }, react_1["default"].createElement("ul", {
-    className: "flex justify-start items-center text-gray-100 ml-4"
-  }, react_1["default"].createElement("li", {
-    className: "mr-4"
-  }, react_1["default"].createElement("h1", null, react_1["default"].createElement("strong", null, "Work week:"), " Mo - Fr")), react_1["default"].createElement("li", {
-    className: "mr-4"
-  }, react_1["default"].createElement("h1", null, react_1["default"].createElement("strong", null, "Daily hours:"), " 8 Hours")), react_1["default"].createElement("li", {
-    className: "mr-4"
-  }, react_1["default"].createElement("h1", null, react_1["default"].createElement("strong", null, "Weekly hours:"), " 40 Hours"))))), react_1["default"].createElement("div", {
-    className: "reality w-full mb-4"
-  }, react_1["default"].createElement("div", {
-    className: "title"
-  }, react_1["default"].createElement("h1", {
-    className: "text-pink-800 font-bold text-xl"
-  }, "Working average:")), react_1["default"].createElement("div", {
-    className: "content flex justify-start items-center"
-  }, react_1["default"].createElement("ul", {
-    className: "flex justify-start items-center text-gray-100 ml-4"
-  }, react_1["default"].createElement("li", {
-    className: "mr-4"
-  }, react_1["default"].createElement("h1", null, react_1["default"].createElement("strong", null, "Daily hours:"), " 8 Hours ", react_1["default"].createElement("span", {
-    className: "text-green-500"
-  }, "(+2 Hours)"))), react_1["default"].createElement("li", {
-    className: "mr-4"
-  }, react_1["default"].createElement("h1", null, react_1["default"].createElement("strong", null, "Weekly hours:"), " 40 Hours ", react_1["default"].createElement("span", {
-    className: "text-red-500"
-  }, "(-3 Hours)")))))));
-};
-
-exports.default = HomeWorkPlans;
-
-/***/ }),
-
-/***/ "./resources/js/components/HomeWorkStats.tsx":
-/*!***************************************************!*\
-  !*** ./resources/js/components/HomeWorkStats.tsx ***!
-  \***************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var __importDefault = this && this.__importDefault || function (mod) {
-  return mod && mod.__esModule ? mod : {
-    "default": mod
-  };
-};
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-
-var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js")); //Interface Props
-
-
-var HomeWorkStats = function HomeWorkStats() {
-  //State
-  //Methods
-  //Template
-  return react_1["default"].createElement("article", {
-    className: "work-stats col-span-3 py-4 px-8 border-l-2 border-gray-100"
-  }, react_1["default"].createElement("h1", {
-    className: "list-title"
-  }, "Base Stats:"), react_1["default"].createElement("ul", {
-    className: "stat-list"
-  }, react_1["default"].createElement("li", {
-    className: "stat-list-item"
-  }, react_1["default"].createElement("p", null, react_1["default"].createElement("strong", null, "Today:"), " 3 Hours")), react_1["default"].createElement("li", {
-    className: "stat-list-item"
-  }, react_1["default"].createElement("p", null, react_1["default"].createElement("strong", null, "This Week:"), " 26 Hours")), react_1["default"].createElement("li", {
-    className: "stat-list-item"
-  }, react_1["default"].createElement("p", null, react_1["default"].createElement("strong", null, "This Month:"), " 126 Hours")), react_1["default"].createElement("li", {
-    className: "stat-list-item"
-  }, react_1["default"].createElement("p", null, react_1["default"].createElement("strong", null, "This Year:"), " 365 Hours"))), react_1["default"].createElement("h1", {
-    className: "list-title"
-  }, "Summary Stats:"), react_1["default"].createElement("ul", {
-    className: "stat-list"
-  }, react_1["default"].createElement("li", {
-    className: "stat-list-item"
-  }, react_1["default"].createElement("p", null, react_1["default"].createElement("strong", null, "Hours:"), " 4322 Hours")), react_1["default"].createElement("li", {
-    className: "stat-list-item"
-  }, react_1["default"].createElement("p", null, react_1["default"].createElement("strong", null, "Days (pure Time):"), " 76 Days")), react_1["default"].createElement("li", {
-    className: "stat-list-item"
-  }, react_1["default"].createElement("p", null, react_1["default"].createElement("strong", null, "Month (pure Time):"), " 2 Month"))));
-};
-
-exports.default = HomeWorkStats;
 
 /***/ }),
 

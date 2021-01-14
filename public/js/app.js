@@ -52267,6 +52267,22 @@ if (false) {} else {
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var map = {
+	"./About": [
+		"./resources/js/Pages/About.tsx",
+		"resources_js_Pages_About_tsx"
+	],
+	"./About.tsx": [
+		"./resources/js/Pages/About.tsx",
+		"resources_js_Pages_About_tsx"
+	],
+	"./Contact": [
+		"./resources/js/Pages/Contact.tsx",
+		"resources_js_Pages_Contact_tsx"
+	],
+	"./Contact.tsx": [
+		"./resources/js/Pages/Contact.tsx",
+		"resources_js_Pages_Contact_tsx"
+	],
 	"./Home": [
 		"./resources/js/Pages/Home.tsx",
 		"resources_js_Pages_Home_tsx"
@@ -52282,6 +52298,14 @@ var map = {
 	"./UserProfile.tsx": [
 		"./resources/js/Pages/UserProfile.tsx",
 		"resources_js_Pages_UserProfile_tsx"
+	],
+	"./WorkOverview": [
+		"./resources/js/Pages/WorkOverview.tsx",
+		"resources_js_Pages_WorkOverview_tsx"
+	],
+	"./WorkOverview.tsx": [
+		"./resources/js/Pages/WorkOverview.tsx",
+		"resources_js_Pages_WorkOverview_tsx"
 	]
 };
 function webpackAsyncContext(req) {
@@ -52399,7 +52423,7 @@ module.exports = webpackAsyncContext;
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"resources_js_Pages_Home_tsx":1,"resources_js_Pages_UserProfile_tsx":1}[chunkId]) return "" + chunkId + ".js";
+/******/ 			if ({"resources_js_Pages_About_tsx":1,"resources_js_Pages_Contact_tsx":1,"resources_js_Pages_Home_tsx":1,"resources_js_Pages_UserProfile_tsx":1,"resources_js_Pages_WorkOverview_tsx":1}[chunkId]) return "" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

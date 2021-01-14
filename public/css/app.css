@@ -31425,6 +31425,68 @@ select {
           animation: bounce 1s infinite;
 }
 
+.primary-nav-link {
+  --tw-border-opacity: 1;
+  border-color: rgba(243, 244, 246, var(--tw-border-opacity));
+  border-radius: 0.25rem;
+  border-width: 2px;
+  margin-bottom: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  text-align: center;
+  --tw-text-opacity: 1;
+  color: rgba(243, 244, 246, var(--tw-text-opacity));
+  width: 100%
+}
+
+.list-title {
+  font-size: 1.5rem;
+  line-height: 2rem;
+  margin-bottom: 0.5rem;
+  --tw-text-opacity: 1;
+  color: rgba(243, 244, 246, var(--tw-text-opacity));
+  text-transform: uppercase
+}
+
+.stat-list {
+  margin-bottom: 2rem;
+  padding-left: 1rem;
+  --tw-text-opacity: 1;
+  color: rgba(156, 163, 175, var(--tw-text-opacity))
+}
+
+.stat-list-item {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  margin-bottom: 0.5rem
+}
+
+.control-button-green {
+  --tw-bg-opacity: 1;
+  background-color: rgba(16, 185, 129, var(--tw-bg-opacity));
+  border-radius: 9999px;
+  font-weight: 700;
+  height: 12rem;
+  font-size: 1.5rem;
+  line-height: 2rem;
+  --tw-text-opacity: 1;
+  color: rgba(243, 244, 246, var(--tw-text-opacity));
+  width: 12rem
+}
+
+.control-button-red {
+  --tw-bg-opacity: 1;
+  background-color: rgba(239, 68, 68, var(--tw-bg-opacity));
+  border-radius: 9999px;
+  font-weight: 700;
+  height: 12rem;
+  font-size: 1.5rem;
+  line-height: 2rem;
+  --tw-text-opacity: 1;
+  color: rgba(243, 244, 246, var(--tw-text-opacity));
+  width: 12rem
+}
+
 @media (min-width: 640px) {
   .sm\:container {
     width: 100%;
@@ -184449,4 +184511,3 @@ select {
             animation: bounce 1s infinite;
   }
 }
-
