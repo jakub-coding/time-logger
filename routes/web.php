@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 
 //Main Pages Routing
 Route::get('/', [pagesController::class, 'Home'])->middleware(['auth'])->name('Home');
-Route::get('/work-overview', [pagesController::class, 'workOverview'])->middleware(['auth'])->name('Home');
+Route::get('/overview', [pagesController::class, 'workOverview'])->middleware(['auth'])->name('Home');
 Route::get('/about', [pagesController::class, 'about'])->name('About');
 Route::get('/contact', [pagesController::class, 'contact'])->name('Contact');
 

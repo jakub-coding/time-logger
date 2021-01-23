@@ -31471,6 +31471,7 @@ select {
   line-height: 2rem;
   --tw-text-opacity: 1;
   color: rgba(243, 244, 246, var(--tw-text-opacity));
+  text-transform: capitalize;
   width: 12rem
 }
 
@@ -31484,7 +31485,20 @@ select {
   line-height: 2rem;
   --tw-text-opacity: 1;
   color: rgba(243, 244, 246, var(--tw-text-opacity));
+  text-transform: capitalize;
   width: 12rem
+}
+
+.control-button-green:focus {
+  outline: none;
+}
+
+.control-button-red:focus {
+  outline: none;
+}
+
+.table-row:last-child {
+  border-bottom: none;
 }
 
 @media (min-width: 640px) {

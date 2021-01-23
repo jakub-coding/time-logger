@@ -12,20 +12,24 @@ class pagesController extends Controller
     public function home(): \Inertia\Response
 	{
 		$user = Auth::user();
-		$last_log = Logger::all()->last();
+		$last_log_php = Logger::all()->last();
+		$last_records = Logger::all()->where('user_id', $user->id);
 
 		return Inertia::render('Home', [
     		'user' => $user,
-			'last_log' => $last_log
+			'last_records' => $last_records,
+			'last_log_php' => $last_log_php,
 		]);
 	}
 
 	public function workOverview(): \Inertia\Response
 	{
 		$user = Auth::user();
+		$userLogs = Logger::all()->where('user_id', $user->id);
 
 		return Inertia::render('WorkOverview', [
-			'user' => $user
+			'user' => $user,
+			'userLogs' => $userLogs,
 		]);
 	}
 

@@ -16,7 +16,7 @@ class CreateLoggersTable extends Migration
         Schema::create('loggers', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('user_id')->unsigned();
-            $table->string('log_status', 50);
+            $table->boolean('log_status')->default(true);
             $table->string('log_note', 500)->nullable();
             $table->timestamps();
         });

@@ -20,7 +20,7 @@ const AsideNavigation: React.FC<Props> = props => {
 
 			<nav className="primary-navigation flex flex-col justify-start items-center mb-8">
 				<InertiaLink className="primary-nav-link" href="/">Dashboard</InertiaLink>
-				<InertiaLink className="primary-nav-link" href="/work-overview">Work overview</InertiaLink>
+				<InertiaLink className="primary-nav-link" href="/overview">Log overview</InertiaLink>
 			</nav>
 
 			<nav className="secondary-navigation flex flex-col justify-start items-center mb-8">

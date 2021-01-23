@@ -9,6 +9,54 @@
 "use strict";
 
 
+var __createBinding = this && this.__createBinding || (Object.create ? function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  Object.defineProperty(o, k2, {
+    enumerable: true,
+    get: function get() {
+      return m[k];
+    }
+  });
+} : function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  o[k2] = m[k];
+});
+
+var __setModuleDefault = this && this.__setModuleDefault || (Object.create ? function (o, v) {
+  Object.defineProperty(o, "default", {
+    enumerable: true,
+    value: v
+  });
+} : function (o, v) {
+  o["default"] = v;
+});
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+  }
+
+  __setModuleDefault(result, mod);
+
+  return result;
+};
+
+var __spreadArrays = this && this.__spreadArrays || function () {
+  for (var s = 0, i = 0, il = arguments.length; i < il; i++) {
+    s += arguments[i].length;
+  }
+
+  for (var r = Array(s), k = 0, i = 0; i < il; i++) {
+    for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++) {
+      r[k] = a[j];
+    }
+  }
+
+  return r;
+};
+
 var __importDefault = this && this.__importDefault || function (mod) {
   return mod && mod.__esModule ? mod : {
     "default": mod
@@ -19,18 +67,67 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 
-var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+var react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 
-var MasterLayout_1 = __importDefault(__webpack_require__(/*! ../layouts/MasterLayout */ "./resources/js/layouts/MasterLayout.tsx")); //Interface Props
+var MasterLayout_1 = __importDefault(__webpack_require__(/*! ../layouts/MasterLayout */ "./resources/js/layouts/MasterLayout.tsx"));
+
+var WorkOverviewItem_1 = __importDefault(__webpack_require__(/*! ../components/WorkOverviewItem */ "./resources/js/components/WorkOverviewItem.tsx"));
+
+var WorkOverview = function WorkOverview(props) {
+  var user = props.user,
+      userLogs = props.userLogs; //State
+
+  var _a = react_1.useState([]),
+      daysLogs = _a[0],
+      setDaysLogs = _a[1]; //Methods
 
 
-var WorkOverview = function WorkOverview() {
-  //State
-  //Methods
-  //Template
+  react_1.useEffect(function () {
+    sortDaysHandle();
+  }, []);
+
+  var sortDaysHandle = function sortDaysHandle() {
+    var newLogsDateArray = [];
+    var newDaysArray = []; //loop user logs array, get item date and pass it to newLogsDateArray array
+
+    userLogs.map(function (item) {
+      var logDay = item.created_at.split('T')[0];
+      newLogsDateArray = __spreadArrays(newLogsDateArray, [logDay]);
+    }); //filter unique values from newLogsDateArray
+
+    var uniqueDaysArray = newLogsDateArray.filter(function (value, index, self) {
+      return self.indexOf(value) === index;
+    }); //from uniqueDaysArray make object an pass it to new array
+
+    uniqueDaysArray.map(function (item) {
+      var day = {
+        date: item,
+        logs: []
+      };
+      newDaysArray = __spreadArrays(newDaysArray, [day]);
+    });
+    newDaysArray.map(function (item) {
+      userLogs.map(function (log) {
+        var logDay = log.created_at.split('T')[0];
+
+        if (item.date === logDay) {
+          item.logs = __spreadArrays(item.logs, [log]);
+        }
+      });
+    });
+    setDaysLogs(newDaysArray);
+  }; //Template
+
+
   return react_1["default"].createElement(MasterLayout_1["default"], {
+    user: user,
     title: "Work Overview"
-  }, react_1["default"].createElement("h1", null, "this is work overview page"));
+  }, react_1["default"].createElement("ul", null, daysLogs.map(function (item, key) {
+    return react_1["default"].createElement(WorkOverviewItem_1["default"], {
+      key: key,
+      logItem: item
+    });
+  })));
 };
 
 exports.default = WorkOverview;
@@ -78,8 +175,8 @@ var AsideNavigation = function AsideNavigation(props) {
     href: "/"
   }, "Dashboard"), react_1["default"].createElement(inertia_react_1.InertiaLink, {
     className: "primary-nav-link",
-    href: "/work-overview"
-  }, "Work overview")), react_1["default"].createElement("nav", {
+    href: "/overview"
+  }, "Log overview")), react_1["default"].createElement("nav", {
     className: "secondary-navigation flex flex-col justify-start items-center mb-8"
   }, react_1["default"].createElement(inertia_react_1.InertiaLink, {
     className: "text-gray-500",
@@ -160,10 +257,10 @@ exports.default = AsideNavigationUserInfo;
 
 /***/ }),
 
-/***/ "./resources/js/layouts/MasterLayout.tsx":
-/*!***********************************************!*\
-  !*** ./resources/js/layouts/MasterLayout.tsx ***!
-  \***********************************************/
+/***/ "./resources/js/components/UserConfirmation.tsx":
+/*!******************************************************!*\
+  !*** ./resources/js/components/UserConfirmation.tsx ***!
+  \******************************************************/
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -181,14 +278,317 @@ Object.defineProperty(exports, "__esModule", ({
 
 var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 
+var UserConfirmation = function UserConfirmation(props) {
+  //State
+  //Methods
+  var acceptEvent = function acceptEvent() {
+    var accepted = true;
+    props.confirmationHandle(accepted);
+  };
+
+  var closeEvent = function closeEvent() {
+    var accepted = false;
+    props.confirmationHandle(accepted);
+  }; //Template
+
+
+  return react_1["default"].createElement("div", {
+    className: "main-container absolute w-full h-screen z-20 flex justify-center items-center"
+  }, react_1["default"].createElement("div", {
+    onClick: closeEvent,
+    className: "w-full h-screen absolute z-20 bg-black opacity-25"
+  }), react_1["default"].createElement("div", {
+    className: "float-window relative z-50 p-8 bg-gray-800 shadow-md rounded"
+  }, react_1["default"].createElement("div", {
+    className: "absolute top-4 right-4"
+  }, react_1["default"].createElement("h1", {
+    onClick: closeEvent,
+    className: "text-gray-100 font-bold text-2xl cursor-pointer"
+  }, "X")), react_1["default"].createElement("div", {
+    className: "title-field text-center py-16"
+  }, react_1["default"].createElement("h1", {
+    className: "text-gray-100 font-bold text-3xl"
+  }, "Please Confirm your Event")), react_1["default"].createElement("div", {
+    className: "button-field flex justify-center items-center"
+  }, react_1["default"].createElement("button", {
+    onClick: acceptEvent,
+    className: "py-6 px-10 text-gray-100 font-bold text-2xl bg-green-500 mr-16 rounded"
+  }, "Confirm"), react_1["default"].createElement("button", {
+    onClick: closeEvent,
+    className: "py-6 px-10 text-gray-100 font-bold text-2xl bg-red-500 rounded"
+  }, "Cancel"))));
+};
+
+exports.default = UserConfirmation;
+
+/***/ }),
+
+/***/ "./resources/js/components/WorkOverviewItem.tsx":
+/*!******************************************************!*\
+  !*** ./resources/js/components/WorkOverviewItem.tsx ***!
+  \******************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __createBinding = this && this.__createBinding || (Object.create ? function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  Object.defineProperty(o, k2, {
+    enumerable: true,
+    get: function get() {
+      return m[k];
+    }
+  });
+} : function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  o[k2] = m[k];
+});
+
+var __setModuleDefault = this && this.__setModuleDefault || (Object.create ? function (o, v) {
+  Object.defineProperty(o, "default", {
+    enumerable: true,
+    value: v
+  });
+} : function (o, v) {
+  o["default"] = v;
+});
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+  }
+
+  __setModuleDefault(result, mod);
+
+  return result;
+};
+
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+
+var react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+var react_moment_1 = __importDefault(__webpack_require__(/*! react-moment */ "./node_modules/react-moment/dist/index.js"));
+
+var moment_1 = __importDefault(__webpack_require__(/*! moment */ "./node_modules/moment/moment.js"));
+
+var WorkOverviewItem = function WorkOverviewItem(props) {
+  var logItem = props.logItem; //State
+
+  var _a = react_1.useState(8),
+      workPlan = _a[0],
+      setWorkPlan = _a[1];
+
+  var _b = react_1.useState(0),
+      hoursSummary = _b[0],
+      setHoursSummary = _b[1]; //Methods
+
+
+  react_1.useEffect(function () {
+    //console.log(logItem);
+    hoursSummaryHandle();
+  }, []);
+
+  var formatDate = function formatDate(input) {
+    if (input) {
+      return moment_1["default"](input).format("HH:mm");
+    } else {
+      return "-- : --";
+    }
+  };
+
+  var timeFormat = function timeFormat(input) {
+    if (input < 10) {
+      return "0" + input.toString();
+    }
+
+    return input.toString();
+  };
+
+  var calculateHours = function calculateHours(logIn, logOut) {
+    var inTime = new Date(Date.parse(logIn));
+    var outTime = new Date(Date.parse(logOut));
+    var pureInTime = inTime.getTime();
+    var pureOutTime = outTime.getTime();
+    var differenceTime = new Date(0);
+    differenceTime.setMilliseconds(pureOutTime - pureInTime);
+
+    if (logOut) {
+      return differenceTime;
+    } else return null;
+  };
+
+  var hoursSummaryHandle = function hoursSummaryHandle() {
+    var workedHours = 0;
+    logItem.logs.map(function (item) {
+      var differenceTime = calculateHours(item.started_at, item.end_at);
+
+      if (differenceTime) {
+        var getTimeNumber = differenceTime.getTime();
+        workedHours = workedHours + getTimeNumber;
+      }
+    });
+    return workedHours;
+  };
+
+  var summaryTimeFormatter = function summaryTimeFormatter() {
+    var workedHours = new Date(hoursSummaryHandle());
+    var timePayload = {
+      h: timeFormat(workedHours.getHours() - 1),
+      m: timeFormat(workedHours.getMinutes()),
+      s: timeFormat(workedHours.getSeconds())
+    };
+    return timePayload.h + ":" + timePayload.m;
+  };
+
+  var timeDateHandle = function timeDateHandle(logIn, logOut) {
+    var differenceTime = calculateHours(logIn, logOut);
+
+    if (differenceTime) {
+      var timePayload = {
+        h: timeFormat(differenceTime.getHours() - 1),
+        m: timeFormat(differenceTime.getMinutes()),
+        s: timeFormat(differenceTime.getSeconds())
+      };
+
+      if (logOut) {
+        return timePayload.h + ":" + timePayload.m;
+      } else return "--:--";
+    }
+  }; //Template
+
+
+  return react_1["default"].createElement("div", {
+    className: "logItem w-full bg-gray-100 p-4 rounded mb-4"
+  }, react_1["default"].createElement("div", {
+    className: "logItemHead w-full grid grid-cols-2"
+  }, react_1["default"].createElement("div", null, react_1["default"].createElement("h1", {
+    className: "font-bold text-gray-800 text-xl"
+  }, react_1["default"].createElement(react_moment_1["default"], {
+    format: "dddd - DD. MM. YYYY"
+  }, logItem.date))), react_1["default"].createElement("div", {
+    className: "flex justify-end items-center"
+  }, react_1["default"].createElement("h1", null, "Day Plan: ", workPlan, " Hours / Worked Hours: ", summaryTimeFormatter()))), react_1["default"].createElement("div", {
+    className: "logItemBody w-full"
+  }, react_1["default"].createElement("div", {
+    className: "main-data"
+  }, react_1["default"].createElement("div", {
+    className: "user-log-container"
+  }, react_1["default"].createElement("table", {
+    className: "w-full p-4"
+  }, react_1["default"].createElement("thead", null, react_1["default"].createElement("tr", null, react_1["default"].createElement("th", {
+    className: "py-4 text-left"
+  }, "Logged in:"), react_1["default"].createElement("th", {
+    className: "py-4 text-left"
+  }, "Logged out:"), react_1["default"].createElement("th", {
+    className: "py-4 text-left"
+  }, "Time summary:"))), react_1["default"].createElement("tbody", null, logItem.logs.map(function (item, key) {
+    return react_1["default"].createElement("tr", {
+      key: key,
+      className: "table-row border-b border-gray-400"
+    }, react_1["default"].createElement("td", {
+      className: "p-4"
+    }, formatDate(item.started_at)), react_1["default"].createElement("td", null, formatDate(item.end_at)), react_1["default"].createElement("td", null, react_1["default"].createElement("p", {
+      className: "mr-4"
+    }, timeDateHandle(item.started_at, item.end_at))));
+  })))))));
+};
+
+exports.default = WorkOverviewItem;
+
+/***/ }),
+
+/***/ "./resources/js/layouts/MasterLayout.tsx":
+/*!***********************************************!*\
+  !*** ./resources/js/layouts/MasterLayout.tsx ***!
+  \***********************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __createBinding = this && this.__createBinding || (Object.create ? function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  Object.defineProperty(o, k2, {
+    enumerable: true,
+    get: function get() {
+      return m[k];
+    }
+  });
+} : function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  o[k2] = m[k];
+});
+
+var __setModuleDefault = this && this.__setModuleDefault || (Object.create ? function (o, v) {
+  Object.defineProperty(o, "default", {
+    enumerable: true,
+    value: v
+  });
+} : function (o, v) {
+  o["default"] = v;
+});
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+  }
+
+  __setModuleDefault(result, mod);
+
+  return result;
+};
+
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+
+var react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
 var AsideNavigation_1 = __importDefault(__webpack_require__(/*! ../components/AsideNavigation */ "./resources/js/components/AsideNavigation.tsx"));
+
+var UserConfirmation_1 = __importDefault(__webpack_require__(/*! ../components/UserConfirmation */ "./resources/js/components/UserConfirmation.tsx"));
 
 var MasterLayout = function MasterLayout(props) {
   var title = props.title,
       children = props.children,
       user = props.user; //State
-  //Methods
-  //Template
+
+  var _a = react_1.useState(false),
+      showConfirmation = _a[0],
+      setShowConfirmation = _a[1]; //Methods
+
+
+  var confirmationHandle = function confirmationHandle(accepted) {
+    if (accepted) {
+      console.log('yey Event has been accepted :-D');
+      setShowConfirmation(false);
+      return true;
+    } else {
+      console.log('ou no event has been canceled');
+      setShowConfirmation(false);
+      return false;
+    }
+  }; //Template
+
 
   return react_1["default"].createElement("main", {
     className: "w-full min-h-screen grid grid-cols-4 bg-gray-800"
@@ -202,7 +602,9 @@ var MasterLayout = function MasterLayout(props) {
     className: "text-6xl text-gray-100"
   }, title)), react_1["default"].createElement("article", {
     className: "page-content"
-  }, children)));
+  }, children)), showConfirmation && react_1["default"].createElement(UserConfirmation_1["default"], {
+    confirmationHandle: confirmationHandle
+  }));
 };
 
 exports.default = MasterLayout;

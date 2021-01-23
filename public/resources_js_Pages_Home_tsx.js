@@ -9,40 +9,6 @@
 "use strict";
 
 
-var __createBinding = this && this.__createBinding || (Object.create ? function (o, m, k, k2) {
-  if (k2 === undefined) k2 = k;
-  Object.defineProperty(o, k2, {
-    enumerable: true,
-    get: function get() {
-      return m[k];
-    }
-  });
-} : function (o, m, k, k2) {
-  if (k2 === undefined) k2 = k;
-  o[k2] = m[k];
-});
-
-var __setModuleDefault = this && this.__setModuleDefault || (Object.create ? function (o, v) {
-  Object.defineProperty(o, "default", {
-    enumerable: true,
-    value: v
-  });
-} : function (o, v) {
-  o["default"] = v;
-});
-
-var __importStar = this && this.__importStar || function (mod) {
-  if (mod && mod.__esModule) return mod;
-  var result = {};
-  if (mod != null) for (var k in mod) {
-    if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-  }
-
-  __setModuleDefault(result, mod);
-
-  return result;
-};
-
 var __importDefault = this && this.__importDefault || function (mod) {
   return mod && mod.__esModule ? mod : {
     "default": mod
@@ -53,7 +19,7 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 
-var react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js")); //Import Layout
+var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js")); //Import Layout
 
 
 var MasterLayout_1 = __importDefault(__webpack_require__(/*! ../layouts/MasterLayout */ "./resources/js/layouts/MasterLayout.tsx")); //Import ChildComponents
@@ -68,28 +34,7 @@ var HomeWorkPlans_1 = __importDefault(__webpack_require__(/*! ../components/Home
 var Home = function Home(props) {
   //Extracting Props to different variables
   var user = props.user,
-      last_log = props.last_log; //State
-
-  var _a = react_1.useState(""),
-      logStatus = _a[0],
-      setLogStatus = _a[1]; //Methods
-
-
-  react_1.useEffect(function () {
-    // console.log(user, last_log);
-    checkLastLog();
-  }, []);
-
-  var checkLastLog = function checkLastLog() {
-    if (last_log.log_status === "stop") {
-      setLogStatus("start");
-    }
-
-    if (last_log.log_status === "start") {
-      setLogStatus("stop");
-    }
-  }; //Template
-
+      last_log_php = props.last_log_php; //Template
 
   return react_1["default"].createElement(MasterLayout_1["default"], {
     user: user,
@@ -97,7 +42,8 @@ var Home = function Home(props) {
   }, react_1["default"].createElement("div", {
     className: "grid grid-cols-6 gap-4"
   }, react_1["default"].createElement(HomeStartControls_1["default"], {
-    logStatus: logStatus
+    userData: user,
+    lastLogPhp: last_log_php
   }), react_1["default"].createElement(HomeWorkStats_1["default"], null), react_1["default"].createElement(HomeWorkPlans_1["default"], null)));
 };
 
@@ -146,8 +92,8 @@ var AsideNavigation = function AsideNavigation(props) {
     href: "/"
   }, "Dashboard"), react_1["default"].createElement(inertia_react_1.InertiaLink, {
     className: "primary-nav-link",
-    href: "/work-overview"
-  }, "Work overview")), react_1["default"].createElement("nav", {
+    href: "/overview"
+  }, "Log overview")), react_1["default"].createElement("nav", {
     className: "secondary-navigation flex flex-col justify-start items-center mb-8"
   }, react_1["default"].createElement(inertia_react_1.InertiaLink, {
     className: "text-gray-500",
@@ -271,38 +217,260 @@ var __importStar = this && this.__importStar || function (mod) {
   return result;
 };
 
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 
-var react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+var react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js")); // Import Children
+
+
+var HomeStartTimer_1 = __importDefault(__webpack_require__(/*! ./HomeStartTimer */ "./resources/js/components/HomeStartTimer.tsx")); // Import Dependencies
+
+
+var axios_1 = __importDefault(__webpack_require__(/*! axios */ "./node_modules/axios/index.js"));
 
 var HomeStartControls = function HomeStartControls(props) {
-  var logStatus = props.logStatus; //State
-  //Methods
+  var userData = props.userData,
+      lastLogPhp = props.lastLogPhp; //State
+
+  var _a = react_1.useState(Boolean),
+      statusOperator = _a[0],
+      setStatusOperator = _a[1];
+
+  var _b = react_1.useState(lastLogPhp),
+      lastLog = _b[0],
+      setLastLog = _b[1]; //Methods
+
 
   react_1.useEffect(function () {
-    console.log(logStatus);
+    defineStatus();
   }, []);
 
+  var defineStatus = function defineStatus() {
+    if (lastLog.log_status) {
+      setStatusOperator(false);
+    } else {
+      setStatusOperator(true);
+    }
+  };
+
+  var statusOperatorHandle = function statusOperatorHandle() {
+    if (statusOperator) {
+      setStatusOperator(false);
+    }
+
+    if (!statusOperator) {
+      setStatusOperator(true);
+    }
+  };
+
   var onButtonClick = function onButtonClick() {
-    console.log(logStatus);
+    if (window.confirm('really bro ?')) {
+      statusOperatorHandle();
+
+      if (statusOperator) {
+        emitDataHandle();
+      } else {
+        updateDataHandle();
+      }
+    }
+  };
+
+  var updateDataHandle = function updateDataHandle() {
+    var dataId = lastLog.id;
+    var dataPayload = {
+      log_status: statusOperator
+    };
+    axios_1["default"].patch("/api/logger/" + dataId, dataPayload).then(function (response) {
+      setLastLog(response.data.data_last_log);
+    })["catch"](function (error) {
+      console.error(error);
+    });
+  };
+
+  var emitDataHandle = function emitDataHandle() {
+    var dataPayload = {
+      user_id: userData.id,
+      log_status: statusOperator
+    };
+    axios_1["default"].post("/api/logger", dataPayload).then(function (response) {
+      setLastLog(response.data.data_last_log);
+    })["catch"](function (error) {
+      console.error(error);
+    });
   }; //Template
 
 
   return react_1["default"].createElement("article", {
     className: "col-span-3 start-controls flex flex-col justify-start items-center p-4"
   }, react_1["default"].createElement("h1", {
-    className: "text-4xl text-gray-100 mb-4 text-center"
-  }, "Start / Stop ", react_1["default"].createElement("br", null), " Logger Controls"), react_1["default"].createElement("button", {
+    className: "text-4xl text-gray-100 mb-6 text-center"
+  }, "Click to ", statusOperator ? "Start" : "Stop"), react_1["default"].createElement("button", {
     onClick: onButtonClick,
-    className: logStatus === "start" ? "control-button-green" : "control-button-red"
-  }, logStatus), react_1["default"].createElement("h1", {
-    className: "text-gray-100 font-bold text-4xl mt-4"
-  }, "00 : 00 : 00"));
+    className: statusOperator ? "control-button-green" : "control-button-red"
+  }, statusOperator ? "Start" : "Stop"), react_1["default"].createElement(HomeStartTimer_1["default"], {
+    lastLog: lastLog
+  }));
 };
 
 exports.default = HomeStartControls;
+
+/***/ }),
+
+/***/ "./resources/js/components/HomeStartTimer.tsx":
+/*!****************************************************!*\
+  !*** ./resources/js/components/HomeStartTimer.tsx ***!
+  \****************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __createBinding = this && this.__createBinding || (Object.create ? function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  Object.defineProperty(o, k2, {
+    enumerable: true,
+    get: function get() {
+      return m[k];
+    }
+  });
+} : function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  o[k2] = m[k];
+});
+
+var __setModuleDefault = this && this.__setModuleDefault || (Object.create ? function (o, v) {
+  Object.defineProperty(o, "default", {
+    enumerable: true,
+    value: v
+  });
+} : function (o, v) {
+  o["default"] = v;
+});
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+  }
+
+  __setModuleDefault(result, mod);
+
+  return result;
+};
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+
+var react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+var HomeStartTimer = function HomeStartTimer(props) {
+  var lastLog = props.lastLog; //State
+
+  var _a = react_1.useState(0),
+      seconds = _a[0],
+      setSeconds = _a[1];
+
+  var _b = react_1.useState(0),
+      minutes = _b[0],
+      setMinutes = _b[1];
+
+  var _c = react_1.useState(0),
+      hours = _c[0],
+      setHours = _c[1];
+
+  var _d = react_1.useState(false),
+      statusOperator = _d[0],
+      setStatusOperator = _d[1];
+
+  react_1.useEffect(function () {
+    if (lastLog.log_status) {
+      setTimer();
+      setStatusOperator(true);
+    } else {
+      setStatusOperator(false);
+    }
+  }, [lastLog]);
+  react_1.useEffect(function () {
+    if (statusOperator) {
+      var Interval_1 = setInterval(function () {
+        var timePayload = {
+          h: hours,
+          m: minutes,
+          s: seconds
+        };
+
+        if (seconds === 0 && minutes === 0 && hours === 0) {
+          timePayload.h = setTimer().h;
+          timePayload.m = setTimer().m;
+          timePayload.s = setTimer().s;
+        }
+
+        timePayload.s = timePayload.s + 1;
+
+        if (timePayload.s >= 60) {
+          timePayload.s = 0;
+          timePayload.m = timePayload.m + 1;
+        }
+
+        if (timePayload.m >= 60) {
+          timePayload.m = 0;
+          timePayload.h = timePayload.h + 1;
+        }
+
+        setSeconds(timePayload.s);
+        setMinutes(timePayload.m);
+        setHours(timePayload.h);
+      }, 1000);
+      return function () {
+        return clearInterval(Interval_1);
+      };
+    } else {
+      setSeconds(0);
+      setMinutes(0);
+      setHours(0);
+    }
+  }); //Methods
+
+  var numberFormatter = function numberFormatter(input) {
+    if (input < 10) {
+      return "0" + input.toString();
+    }
+
+    return input.toString();
+  };
+
+  var setTimer = function setTimer() {
+    var oldDate = new Date(Date.parse(lastLog.started_at));
+    var newDate = new Date(Date.parse(new Date().toISOString()));
+    var oldTime = oldDate.getTime();
+    var newTime = newDate.getTime();
+    var differenceTime = new Date(0);
+    differenceTime.setMilliseconds(newTime - oldTime);
+    return {
+      h: differenceTime.getHours() - 1,
+      m: differenceTime.getMinutes(),
+      s: differenceTime.getSeconds()
+    };
+  }; //Template
+
+
+  return react_1["default"].createElement("div", {
+    className: "text-center"
+  }, react_1["default"].createElement("h1", {
+    className: "mt-6 text-gray-100 font-bold text-3xl"
+  }, numberFormatter(hours), " : ", numberFormatter(minutes), " : ", numberFormatter(seconds)));
+};
+
+exports.default = HomeStartTimer;
 
 /***/ }),
 
@@ -432,10 +600,10 @@ exports.default = HomeWorkStats;
 
 /***/ }),
 
-/***/ "./resources/js/layouts/MasterLayout.tsx":
-/*!***********************************************!*\
-  !*** ./resources/js/layouts/MasterLayout.tsx ***!
-  \***********************************************/
+/***/ "./resources/js/components/UserConfirmation.tsx":
+/*!******************************************************!*\
+  !*** ./resources/js/components/UserConfirmation.tsx ***!
+  \******************************************************/
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -453,14 +621,132 @@ Object.defineProperty(exports, "__esModule", ({
 
 var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 
+var UserConfirmation = function UserConfirmation(props) {
+  //State
+  //Methods
+  var acceptEvent = function acceptEvent() {
+    var accepted = true;
+    props.confirmationHandle(accepted);
+  };
+
+  var closeEvent = function closeEvent() {
+    var accepted = false;
+    props.confirmationHandle(accepted);
+  }; //Template
+
+
+  return react_1["default"].createElement("div", {
+    className: "main-container absolute w-full h-screen z-20 flex justify-center items-center"
+  }, react_1["default"].createElement("div", {
+    onClick: closeEvent,
+    className: "w-full h-screen absolute z-20 bg-black opacity-25"
+  }), react_1["default"].createElement("div", {
+    className: "float-window relative z-50 p-8 bg-gray-800 shadow-md rounded"
+  }, react_1["default"].createElement("div", {
+    className: "absolute top-4 right-4"
+  }, react_1["default"].createElement("h1", {
+    onClick: closeEvent,
+    className: "text-gray-100 font-bold text-2xl cursor-pointer"
+  }, "X")), react_1["default"].createElement("div", {
+    className: "title-field text-center py-16"
+  }, react_1["default"].createElement("h1", {
+    className: "text-gray-100 font-bold text-3xl"
+  }, "Please Confirm your Event")), react_1["default"].createElement("div", {
+    className: "button-field flex justify-center items-center"
+  }, react_1["default"].createElement("button", {
+    onClick: acceptEvent,
+    className: "py-6 px-10 text-gray-100 font-bold text-2xl bg-green-500 mr-16 rounded"
+  }, "Confirm"), react_1["default"].createElement("button", {
+    onClick: closeEvent,
+    className: "py-6 px-10 text-gray-100 font-bold text-2xl bg-red-500 rounded"
+  }, "Cancel"))));
+};
+
+exports.default = UserConfirmation;
+
+/***/ }),
+
+/***/ "./resources/js/layouts/MasterLayout.tsx":
+/*!***********************************************!*\
+  !*** ./resources/js/layouts/MasterLayout.tsx ***!
+  \***********************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __createBinding = this && this.__createBinding || (Object.create ? function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  Object.defineProperty(o, k2, {
+    enumerable: true,
+    get: function get() {
+      return m[k];
+    }
+  });
+} : function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  o[k2] = m[k];
+});
+
+var __setModuleDefault = this && this.__setModuleDefault || (Object.create ? function (o, v) {
+  Object.defineProperty(o, "default", {
+    enumerable: true,
+    value: v
+  });
+} : function (o, v) {
+  o["default"] = v;
+});
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+  }
+
+  __setModuleDefault(result, mod);
+
+  return result;
+};
+
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+
+var react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
 var AsideNavigation_1 = __importDefault(__webpack_require__(/*! ../components/AsideNavigation */ "./resources/js/components/AsideNavigation.tsx"));
+
+var UserConfirmation_1 = __importDefault(__webpack_require__(/*! ../components/UserConfirmation */ "./resources/js/components/UserConfirmation.tsx"));
 
 var MasterLayout = function MasterLayout(props) {
   var title = props.title,
       children = props.children,
       user = props.user; //State
-  //Methods
-  //Template
+
+  var _a = react_1.useState(false),
+      showConfirmation = _a[0],
+      setShowConfirmation = _a[1]; //Methods
+
+
+  var confirmationHandle = function confirmationHandle(accepted) {
+    if (accepted) {
+      console.log('yey Event has been accepted :-D');
+      setShowConfirmation(false);
+      return true;
+    } else {
+      console.log('ou no event has been canceled');
+      setShowConfirmation(false);
+      return false;
+    }
+  }; //Template
+
 
   return react_1["default"].createElement("main", {
     className: "w-full min-h-screen grid grid-cols-4 bg-gray-800"
@@ -474,7 +760,9 @@ var MasterLayout = function MasterLayout(props) {
     className: "text-6xl text-gray-100"
   }, title)), react_1["default"].createElement("article", {
     className: "page-content"
-  }, children)));
+  }, children)), showConfirmation && react_1["default"].createElement(UserConfirmation_1["default"], {
+    confirmationHandle: confirmationHandle
+  }));
 };
 
 exports.default = MasterLayout;

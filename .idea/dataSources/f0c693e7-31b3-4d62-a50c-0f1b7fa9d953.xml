@@ -1023,8 +1023,9 @@ APPLICATION_PASSWORD_ADMIN,AUDIT_ADMIN,BACKUP_ADMIN,BINLOG_ADMIN,BINLOG_ENCRYPTI
     </column>
     <column id="313" parent="297" name="log_status">
       <Position>3</Position>
-      <DataType>varchar(50)|0s</DataType>
+      <DataType>tinyint(1)|0s</DataType>
       <NotNull>1</NotNull>
+      <DefaultExpression>1</DefaultExpression>
     </column>
     <column id="314" parent="297" name="log_note">
       <Position>4</Position>
