@@ -159,10 +159,13 @@ var AsideNavigationUserInfo = function AsideNavigationUserInfo(props) {
     className: "user-nav mb-4"
   }, react_1["default"].createElement(inertia_react_1.InertiaLink, {
     className: "text-sm text-gray-500 mr-4",
-    href: "#"
+    href: "/user-profile"
   }, "Profile"), react_1["default"].createElement(inertia_react_1.InertiaLink, {
     className: "text-sm text-gray-500",
-    href: "#"
+    href: "/logout",
+    method: "post",
+    as: "button",
+    type: "button"
   }, "Logout")), react_1["default"].createElement("p", {
     className: "text-gray-100 text-md"
   }, react_1["default"].createElement(react_moment_1["default"], {

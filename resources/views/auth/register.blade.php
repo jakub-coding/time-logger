@@ -1,9 +1,7 @@
 <x-guest-layout>
     <x-auth-card>
         <x-slot name="logo">
-            <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-            </a>
+            <h1 class="text-6xl text-gray-100">User - Register</h1>
         </x-slot>
 
         <!-- Validation Errors -->

@@ -23,8 +23,8 @@ const AsideNavigationUserInfo: React.FC<Props> = props => {
 			</svg>
 			<h1 className="text-gray-100 text-xl">{user.name}</h1>
 			<nav className="user-nav mb-4">
-				<InertiaLink className="text-sm text-gray-500 mr-4" href="#">Profile</InertiaLink>
-				<InertiaLink className="text-sm text-gray-500" href="#">Logout</InertiaLink>
+				<InertiaLink className="text-sm text-gray-500 mr-4" href="/user-profile">Profile</InertiaLink>
+				<InertiaLink className="text-sm text-gray-500" href="/logout" method="post" as="button" type="button">Logout</InertiaLink>
 			</nav>
 			<p className="text-gray-100 text-md">
 				<Moment format="DD. MM. YYYY">

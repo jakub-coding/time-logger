@@ -33,6 +33,15 @@ class pagesController extends Controller
 		]);
 	}
 
+	public function userProfile(): \Inertia\Response
+	{
+		$user = Auth::user();
+
+		return Inertia::render('UserProfile', [
+			'authUser' => $user
+		]);
+	}
+
 	public function about(): \Inertia\Response
 	{
 		return Inertia::render('About');

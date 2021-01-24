@@ -1,15 +1,26 @@
-import React from "react";
+import React, {useEffect} from "react";
+import MasterLayout from "../layouts/MasterLayout";
 
 //Interface Props
+interface Props {
+	authUser: any
+}
 
-const UserProfile: React.FC = () => {
+const UserProfile: React.FC<Props> = props => {
+	const { authUser } = props;
+
 	//State
+	useEffect(() => {
+		console.log(authUser);
+	}, [])
 
-	//Methods
+
 
 	//Template
 	return (
-		<h1>User Profile</h1>
+		<MasterLayout user={authUser} title="User Profile">
+			<h1>User Profile</h1>
+		</MasterLayout>
 	);
 };
 
