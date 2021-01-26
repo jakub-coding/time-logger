@@ -82,10 +82,6 @@ var UserProfile = function UserProfile(props) {
       userWeekly = _e[0],
       setUserWeekly = _e[1];
 
-  react_1.useEffect(function () {
-    console.log(authUser);
-  }, []);
-
   var inputEditHandle = function inputEditHandle(event) {
     event.preventDefault();
 
@@ -161,15 +157,7 @@ var UserProfile = function UserProfile(props) {
     onChange: inputHandle,
     disabled: inputDisabled,
     value: userMail
-  }), !authUser.email_verified_at && react_1["default"].createElement("div", {
-    className: "email-verification mb-4"
-  }, react_1["default"].createElement("p", {
-    className: "text-red-500"
-  }, "Your e-mail is not verified !"), react_1["default"].createElement("p", {
-    className: "text-gray-400"
-  }, "please press button and make e-mail Verification."), react_1["default"].createElement("button", {
-    className: "py-2 px-4 bg-green-500 rounded text-gray-100 font-bold mt-4"
-  }, "E-mail Verification")), react_1["default"].createElement("h1", {
+  }), react_1["default"].createElement("h1", {
     className: "text-gray-100 text-2xl font-bold mb-4 mt-8"
   }, "User work plan:"), react_1["default"].createElement("label", {
     className: "pb-2 text-gray-100 inline-block",

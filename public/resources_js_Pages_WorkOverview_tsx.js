@@ -84,7 +84,6 @@ var WorkOverview = function WorkOverview(props) {
 
   react_1.useEffect(function () {
     sortDaysHandle();
-    console.log(userLogs);
   }, []);
 
   var sortDaysHandle = function sortDaysHandle() {
@@ -123,13 +122,17 @@ var WorkOverview = function WorkOverview(props) {
   return react_1["default"].createElement(MasterLayout_1["default"], {
     user: user,
     title: "Work Overview"
-  }, react_1["default"].createElement("ul", null, daysLogs.map(function (item, key) {
+  }, react_1["default"].createElement("ul", {
+    className: !userLogs ? "hidden" : "block"
+  }, daysLogs.map(function (item, key) {
     return react_1["default"].createElement(WorkOverviewItem_1["default"], {
       key: key,
       user: user,
       logItem: item
     });
-  })));
+  })), userLogs.length === 0 && react_1["default"].createElement("h1", {
+    className: "text-gray-100 text-xl"
+  }, "User have no Logs yet ! Please do something :-)"));
 };
 
 exports.default = WorkOverview;

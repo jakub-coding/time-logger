@@ -16,7 +16,6 @@ const WorkOverview: React.FC<Props> = props => {
 	//Methods
 	useEffect(() => {
 		sortDaysHandle();
-		console.log(userLogs)
 	}, [])
 
 
@@ -67,11 +66,17 @@ const WorkOverview: React.FC<Props> = props => {
 	//Template
 	return (
 		<MasterLayout user={user} title="Work Overview">
-			<ul>
+			<ul className={! userLogs ? "hidden" : "block"}>
 				{daysLogs.map((item, key) => (
 					<WorkOverviewItem key={key} user={user} logItem={item} />
 				))}
 			</ul>
+			{
+				userLogs.length === 0 && (
+					<h1 className="text-gray-100 text-xl">User have no Logs yet ! Please do something :-)</h1>
+				)
+			}
+
 		</MasterLayout>
 	);
 };

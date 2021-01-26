@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useEffect, useRef, useState} from "react";
+import React, {ChangeEvent, useState} from "react";
 import MasterLayout from "../layouts/MasterLayout";
 import axios from "axios";
 
@@ -16,10 +16,6 @@ const UserProfile: React.FC<Props> = props => {
 	const [userMail, setUserMail] = useState(authUser.email)
 	const [userDaily, setUserDaily] = useState(authUser.daily_hours_plan)
 	const [userWeekly, setUserWeekly] = useState(authUser.weekly_hours_plan)
-
-	useEffect(() => {
-		console.log(authUser);
-	}, [])
 
 
 	const inputEditHandle = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -78,13 +74,6 @@ const UserProfile: React.FC<Props> = props => {
 					<label className="pb-2 text-gray-100 inline-block" htmlFor="user-email">User E-mail:</label>
 					<input className="user-form-input" id="user-email" type="mail" onChange={inputHandle} disabled={inputDisabled} value={userMail}/>
 
-					{!authUser.email_verified_at && (
-						<div className="email-verification mb-4">
-							<p className="text-red-500">Your e-mail is not verified !</p>
-							<p className="text-gray-400">please press button and make e-mail Verification.</p>
-							<button className="py-2 px-4 bg-green-500 rounded text-gray-100 font-bold mt-4">E-mail Verification</button>
-						</div>
-					)}
 
 					<h1 className="text-gray-100 text-2xl font-bold mb-4 mt-8">User work plan:</h1>
 					<label className="pb-2 text-gray-100 inline-block" htmlFor="daily-hours">Daily hours plan:</label>
