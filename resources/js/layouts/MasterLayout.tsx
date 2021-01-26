@@ -36,7 +36,7 @@ const MasterLayout: React.FC<Props> = props => {
 
 			<section className="col-span-3 p-16">
 
-				<article className="page-title mb-16">
+				<article className="page-title mb-16 text-center bg-gray-900 p-16 rounded">
 					<h1 className="text-6xl text-gray-100">{title}</h1>
 				</article>
 

@@ -20,6 +20,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+		'daily_hours_plan',
+		'weekly_hours_plan',
     ];
 
     /**

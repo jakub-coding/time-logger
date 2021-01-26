@@ -37,3 +37,7 @@
 .table-row:last-child {
 	border-bottom: none;
 }
+
+.user-form-input {
+	@apply w-full rounded mb-4 disabled:opacity-75 p-3
+}

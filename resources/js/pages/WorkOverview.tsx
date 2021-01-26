@@ -68,7 +68,7 @@ const WorkOverview: React.FC<Props> = props => {
 		<MasterLayout user={user} title="Work Overview">
 			<ul>
 				{daysLogs.map((item, key) => (
-					<WorkOverviewItem key={key} logItem={item} />
+					<WorkOverviewItem key={key} user={user} logItem={item} />
 				))}
 			</ul>
 		</MasterLayout>

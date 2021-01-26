@@ -24,8 +24,8 @@ const AsideNavigation: React.FC<Props> = props => {
 			</nav>
 
 			<nav className="secondary-navigation flex flex-col justify-start items-center mb-8">
-				<InertiaLink className="text-gray-500" href="#">About</InertiaLink>
-				<InertiaLink className="text-gray-500" href="#">Contact Support</InertiaLink>
+				<InertiaLink className="text-gray-500" href="/about">About</InertiaLink>
+				<InertiaLink className="text-gray-500" href="/contact">Contact Support</InertiaLink>
 			</nav>
 
 			<p className="text-xs text-gray-900 text-center">ver. 1.0 &copy;2021</p>

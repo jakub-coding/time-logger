@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Logger;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -12,13 +13,13 @@ class pagesController extends Controller
     public function home(): \Inertia\Response
 	{
 		$user = Auth::user();
-		$last_log_php = Logger::all()->last();
-		$last_records = Logger::all()->where('user_id', $user->id);
+		$userLastLog = Logger::all()->where('user_id', $user->id)->last();
+		$userLogs = Logger::all()->where('user_id', $user->id);
 
 		return Inertia::render('Home', [
     		'user' => $user,
-			'last_records' => $last_records,
-			'last_log_php' => $last_log_php,
+			'userLogs' => $userLogs,
+			'userLastLog' => $userLastLog,
 		]);
 	}
 

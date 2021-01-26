@@ -57,17 +57,147 @@ var react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/reac
 
 var MasterLayout_1 = __importDefault(__webpack_require__(/*! ../layouts/MasterLayout */ "./resources/js/layouts/MasterLayout.tsx"));
 
+var axios_1 = __importDefault(__webpack_require__(/*! axios */ "./node_modules/axios/index.js"));
+
 var UserProfile = function UserProfile(props) {
   var authUser = props.authUser; //State
 
+  var _a = react_1.useState(true),
+      inputDisabled = _a[0],
+      setInputDisabled = _a[1];
+
+  var _b = react_1.useState(authUser.name),
+      userName = _b[0],
+      setUserName = _b[1];
+
+  var _c = react_1.useState(authUser.email),
+      userMail = _c[0],
+      setUserMail = _c[1];
+
+  var _d = react_1.useState(authUser.daily_hours_plan),
+      userDaily = _d[0],
+      setUserDaily = _d[1];
+
+  var _e = react_1.useState(authUser.weekly_hours_plan),
+      userWeekly = _e[0],
+      setUserWeekly = _e[1];
+
   react_1.useEffect(function () {
     console.log(authUser);
-  }, []); //Template
+  }, []);
+
+  var inputEditHandle = function inputEditHandle(event) {
+    event.preventDefault();
+
+    if (inputDisabled) {
+      setInputDisabled(false);
+    } else {
+      setInputDisabled(true);
+    }
+  };
+
+  var onSubmit = function onSubmit(event) {
+    event.preventDefault();
+
+    if (window.confirm('Save Changes ?')) {
+      var userDataPayload = {
+        name: userName,
+        email: userMail,
+        daily_hours_plan: userDaily,
+        weekly_hours_plan: userWeekly
+      };
+      axios_1["default"].patch("/api/users/" + authUser.id, userDataPayload).then(function (response) {
+        console.log(response.data);
+      })["catch"](function (error) {
+        console.error(error);
+      });
+      inputEditHandle(event);
+    }
+  };
+
+  var inputHandle = function inputHandle(event) {
+    if (event.target.id === "user-name") {
+      setUserName(event.target.value);
+    }
+
+    if (event.target.id === "user-email") {
+      setUserMail(event.target.value);
+    }
+
+    if (event.target.id === "daily-hours") {
+      setUserDaily(event.target.value);
+    }
+
+    if (event.target.id === "weekly-hours") {
+      setUserWeekly(event.target.value);
+    }
+  }; //Template
+
 
   return react_1["default"].createElement(MasterLayout_1["default"], {
     user: authUser,
     title: "User Profile"
-  }, react_1["default"].createElement("h1", null, "User Profile"));
+  }, react_1["default"].createElement("div", {
+    className: "user-profile-container grid grid-cols-2"
+  }, react_1["default"].createElement("form", null, react_1["default"].createElement("h1", {
+    className: "text-gray-100 text-2xl font-bold mb-4"
+  }, "User info:"), react_1["default"].createElement("label", {
+    className: "pb-2 text-gray-100 inline-block",
+    htmlFor: "user-name"
+  }, "User Name:"), react_1["default"].createElement("input", {
+    className: "user-form-input",
+    id: "user-name",
+    type: "text",
+    onChange: inputHandle,
+    disabled: inputDisabled,
+    value: userName
+  }), react_1["default"].createElement("label", {
+    className: "pb-2 text-gray-100 inline-block",
+    htmlFor: "user-email"
+  }, "User E-mail:"), react_1["default"].createElement("input", {
+    className: "user-form-input",
+    id: "user-email",
+    type: "mail",
+    onChange: inputHandle,
+    disabled: inputDisabled,
+    value: userMail
+  }), !authUser.email_verified_at && react_1["default"].createElement("div", {
+    className: "email-verification mb-4"
+  }, react_1["default"].createElement("p", {
+    className: "text-red-500"
+  }, "Your e-mail is not verified !"), react_1["default"].createElement("p", {
+    className: "text-gray-400"
+  }, "please press button and make e-mail Verification."), react_1["default"].createElement("button", {
+    className: "py-2 px-4 bg-green-500 rounded text-gray-100 font-bold mt-4"
+  }, "E-mail Verification")), react_1["default"].createElement("h1", {
+    className: "text-gray-100 text-2xl font-bold mb-4 mt-8"
+  }, "User work plan:"), react_1["default"].createElement("label", {
+    className: "pb-2 text-gray-100 inline-block",
+    htmlFor: "daily-hours"
+  }, "Daily hours plan:"), react_1["default"].createElement("input", {
+    className: "user-form-input",
+    id: "daily-hours",
+    type: "number",
+    onChange: inputHandle,
+    disabled: inputDisabled,
+    value: userDaily
+  }), react_1["default"].createElement("label", {
+    className: "pb-2 text-gray-100 inline-block",
+    htmlFor: "weekly-hours"
+  }, "Weekly hours plan:"), react_1["default"].createElement("input", {
+    className: "user-form-input",
+    id: "weekly-hours",
+    type: "number",
+    onChange: inputHandle,
+    disabled: inputDisabled,
+    value: userWeekly
+  }), inputDisabled ? react_1["default"].createElement("button", {
+    className: "py-2 px-4 bg-blue-500 text-gray-100 font-bold rounded",
+    onClick: inputEditHandle
+  }, "Edit") : react_1["default"].createElement("button", {
+    className: "py-2 px-4 bg-green-500 text-gray-100 font-bold rounded",
+    onClick: onSubmit
+  }, "Save"))));
 };
 
 exports.default = UserProfile;
@@ -120,10 +250,10 @@ var AsideNavigation = function AsideNavigation(props) {
     className: "secondary-navigation flex flex-col justify-start items-center mb-8"
   }, react_1["default"].createElement(inertia_react_1.InertiaLink, {
     className: "text-gray-500",
-    href: "#"
+    href: "/about"
   }, "About"), react_1["default"].createElement(inertia_react_1.InertiaLink, {
     className: "text-gray-500",
-    href: "#"
+    href: "/contact"
   }, "Contact Support")), react_1["default"].createElement("p", {
     className: "text-xs text-gray-900 text-center"
   }, "ver. 1.0 \xA92021"));
@@ -355,7 +485,7 @@ var MasterLayout = function MasterLayout(props) {
   }), react_1["default"].createElement("section", {
     className: "col-span-3 p-16"
   }, react_1["default"].createElement("article", {
-    className: "page-title mb-16"
+    className: "page-title mb-16 text-center bg-gray-900 p-16 rounded"
   }, react_1["default"].createElement("h1", {
     className: "text-6xl text-gray-100"
   }, title)), react_1["default"].createElement("article", {

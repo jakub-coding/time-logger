@@ -125,6 +125,7 @@ var WorkOverview = function WorkOverview(props) {
   }, react_1["default"].createElement("ul", null, daysLogs.map(function (item, key) {
     return react_1["default"].createElement(WorkOverviewItem_1["default"], {
       key: key,
+      user: user,
       logItem: item
     });
   })));
@@ -180,10 +181,10 @@ var AsideNavigation = function AsideNavigation(props) {
     className: "secondary-navigation flex flex-col justify-start items-center mb-8"
   }, react_1["default"].createElement(inertia_react_1.InertiaLink, {
     className: "text-gray-500",
-    href: "#"
+    href: "/about"
   }, "About"), react_1["default"].createElement(inertia_react_1.InertiaLink, {
     className: "text-gray-500",
-    href: "#"
+    href: "/contact"
   }, "Contact Support")), react_1["default"].createElement("p", {
     className: "text-xs text-gray-900 text-center"
   }, "ver. 1.0 \xA92021"));
@@ -386,19 +387,10 @@ var react_moment_1 = __importDefault(__webpack_require__(/*! react-moment */ "./
 var moment_1 = __importDefault(__webpack_require__(/*! moment */ "./node_modules/moment/moment.js"));
 
 var WorkOverviewItem = function WorkOverviewItem(props) {
-  var logItem = props.logItem; //State
-
-  var _a = react_1.useState(8),
-      workPlan = _a[0],
-      setWorkPlan = _a[1];
-
-  var _b = react_1.useState(0),
-      hoursSummary = _b[0],
-      setHoursSummary = _b[1]; //Methods
-
+  var logItem = props.logItem,
+      user = props.user; //Methods
 
   react_1.useEffect(function () {
-    //console.log(logItem);
     hoursSummaryHandle();
   }, []);
 
@@ -481,7 +473,7 @@ var WorkOverviewItem = function WorkOverviewItem(props) {
     format: "dddd - DD. MM. YYYY"
   }, logItem.date))), react_1["default"].createElement("div", {
     className: "flex justify-end items-center"
-  }, react_1["default"].createElement("h1", null, "Day Plan: ", workPlan, " Hours / Worked Hours: ", summaryTimeFormatter()))), react_1["default"].createElement("div", {
+  }, react_1["default"].createElement("h1", null, "Day Plan: ", user.daily_hours_plan, " Hours / Worked Hours: ", summaryTimeFormatter()))), react_1["default"].createElement("div", {
     className: "logItemBody w-full"
   }, react_1["default"].createElement("div", {
     className: "main-data"
@@ -600,7 +592,7 @@ var MasterLayout = function MasterLayout(props) {
   }), react_1["default"].createElement("section", {
     className: "col-span-3 p-16"
   }, react_1["default"].createElement("article", {
-    className: "page-title mb-16"
+    className: "page-title mb-16 text-center bg-gray-900 p-16 rounded"
   }, react_1["default"].createElement("h1", {
     className: "text-6xl text-gray-100"
   }, title)), react_1["default"].createElement("article", {

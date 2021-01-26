@@ -45,9 +45,9 @@
                     </a>
                 @endif--}}
 
-                <a class="mr-4 underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('password.request') }}">
+                {{--<a class="mr-4 underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('password.request') }}">
                     {{ __('Forgot your password?') }}
-                </a>
+                </a>--}}
 
                 <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('register') }}">
                     {{ __('Register') }}

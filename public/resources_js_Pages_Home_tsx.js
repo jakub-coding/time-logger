@@ -34,17 +34,23 @@ var HomeWorkPlans_1 = __importDefault(__webpack_require__(/*! ../components/Home
 var Home = function Home(props) {
   //Extracting Props to different variables
   var user = props.user,
-      last_log_php = props.last_log_php; //Template
+      userLastLog = props.userLastLog,
+      userLogs = props.userLogs; //Template
 
   return react_1["default"].createElement(MasterLayout_1["default"], {
     user: user,
-    title: "Work-logger Dashboard"
+    title: "Dashboard"
   }, react_1["default"].createElement("div", {
     className: "grid grid-cols-6 gap-4"
   }, react_1["default"].createElement(HomeStartControls_1["default"], {
     userData: user,
-    lastLogPhp: last_log_php
-  }), react_1["default"].createElement(HomeWorkStats_1["default"], null), react_1["default"].createElement(HomeWorkPlans_1["default"], null)));
+    userLastLog: userLastLog
+  }), react_1["default"].createElement(HomeWorkStats_1["default"], {
+    user: user,
+    userLogs: userLogs
+  }), react_1["default"].createElement(HomeWorkPlans_1["default"], {
+    user: user
+  })));
 };
 
 exports.default = Home;
@@ -97,10 +103,10 @@ var AsideNavigation = function AsideNavigation(props) {
     className: "secondary-navigation flex flex-col justify-start items-center mb-8"
   }, react_1["default"].createElement(inertia_react_1.InertiaLink, {
     className: "text-gray-500",
-    href: "#"
+    href: "/about"
   }, "About"), react_1["default"].createElement(inertia_react_1.InertiaLink, {
     className: "text-gray-500",
-    href: "#"
+    href: "/contact"
   }, "Contact Support")), react_1["default"].createElement("p", {
     className: "text-xs text-gray-900 text-center"
   }, "ver. 1.0 \xA92021"));
@@ -240,13 +246,13 @@ var axios_1 = __importDefault(__webpack_require__(/*! axios */ "./node_modules/a
 
 var HomeStartControls = function HomeStartControls(props) {
   var userData = props.userData,
-      lastLogPhp = props.lastLogPhp; //State
+      userLastLog = props.userLastLog; //State
 
   var _a = react_1.useState(Boolean),
       statusOperator = _a[0],
       setStatusOperator = _a[1];
 
-  var _b = react_1.useState(lastLogPhp),
+  var _b = react_1.useState(userLastLog),
       lastLog = _b[0],
       setLastLog = _b[1]; //Methods
 
@@ -496,50 +502,30 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 
-var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js")); //Interface Props
+var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 
+var HomeWorkPlans = function HomeWorkPlans(props) {
+  var user = props.user; //Template
 
-var HomeWorkPlans = function HomeWorkPlans() {
-  //State
-  //Methods
-  //Template
   return react_1["default"].createElement("article", {
     className: "work-planner col-span-6 mt-8"
   }, react_1["default"].createElement("div", {
-    className: "planner w-full mb-4"
-  }, react_1["default"].createElement("div", {
-    className: "title"
-  }, react_1["default"].createElement("h1", {
-    className: "text-pink-800 font-bold text-xl"
-  }, "Working plan:")), react_1["default"].createElement("div", {
-    className: "content flex justify-start items-center"
-  }, react_1["default"].createElement("ul", {
-    className: "flex justify-start items-center text-gray-100 ml-4"
-  }, react_1["default"].createElement("li", {
-    className: "mr-4"
-  }, react_1["default"].createElement("h1", null, react_1["default"].createElement("strong", null, "Work week:"), " Mo - Fr")), react_1["default"].createElement("li", {
-    className: "mr-4"
-  }, react_1["default"].createElement("h1", null, react_1["default"].createElement("strong", null, "Daily hours:"), " 8 Hours")), react_1["default"].createElement("li", {
-    className: "mr-4"
-  }, react_1["default"].createElement("h1", null, react_1["default"].createElement("strong", null, "Weekly hours:"), " 40 Hours"))))), react_1["default"].createElement("div", {
     className: "reality w-full mb-4"
   }, react_1["default"].createElement("div", {
     className: "title"
   }, react_1["default"].createElement("h1", {
     className: "text-pink-800 font-bold text-xl"
-  }, "Working average:")), react_1["default"].createElement("div", {
+  }, "Work plan:")), react_1["default"].createElement("div", {
     className: "content flex justify-start items-center"
   }, react_1["default"].createElement("ul", {
     className: "flex justify-start items-center text-gray-100 ml-4"
   }, react_1["default"].createElement("li", {
     className: "mr-4"
-  }, react_1["default"].createElement("h1", null, react_1["default"].createElement("strong", null, "Daily hours:"), " 8 Hours ", react_1["default"].createElement("span", {
-    className: "text-green-500"
-  }, "(+2 Hours)"))), react_1["default"].createElement("li", {
+  }, react_1["default"].createElement("h1", null, react_1["default"].createElement("strong", null, "Work week:"), " Mo-Fr ")), react_1["default"].createElement("li", {
     className: "mr-4"
-  }, react_1["default"].createElement("h1", null, react_1["default"].createElement("strong", null, "Weekly hours:"), " 40 Hours ", react_1["default"].createElement("span", {
-    className: "text-red-500"
-  }, "(-3 Hours)")))))));
+  }, react_1["default"].createElement("h1", null, react_1["default"].createElement("strong", null, "Daily:"), " ", user.daily_hours_plan, " Hours ")), react_1["default"].createElement("li", {
+    className: "mr-4"
+  }, react_1["default"].createElement("h1", null, react_1["default"].createElement("strong", null, "Weekly:"), " ", user.weekly_hours_plan, " Hours "))))));
 };
 
 exports.default = HomeWorkPlans;
@@ -555,6 +541,40 @@ exports.default = HomeWorkPlans;
 "use strict";
 
 
+var __createBinding = this && this.__createBinding || (Object.create ? function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  Object.defineProperty(o, k2, {
+    enumerable: true,
+    get: function get() {
+      return m[k];
+    }
+  });
+} : function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  o[k2] = m[k];
+});
+
+var __setModuleDefault = this && this.__setModuleDefault || (Object.create ? function (o, v) {
+  Object.defineProperty(o, "default", {
+    enumerable: true,
+    value: v
+  });
+} : function (o, v) {
+  o["default"] = v;
+});
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+  }
+
+  __setModuleDefault(result, mod);
+
+  return result;
+};
+
 var __importDefault = this && this.__importDefault || function (mod) {
   return mod && mod.__esModule ? mod : {
     "default": mod
@@ -565,13 +585,113 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 
-var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js")); //Interface Props
+var react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+var moment_1 = __importDefault(__webpack_require__(/*! moment */ "./node_modules/moment/moment.js"));
+
+var HomeWorkStats = function HomeWorkStats(props) {
+  var user = props.user,
+      userLogs = props.userLogs; //State
+
+  var _a = react_1.useState([]),
+      dayLogs = _a[0],
+      setDayLogs = _a[1];
+
+  var _b = react_1.useState([]),
+      weekLogs = _b[0],
+      setWeekLogs = _b[1];
+
+  var _c = react_1.useState([]),
+      monthLogs = _c[0],
+      setMonthLogs = _c[1];
+
+  var _d = react_1.useState([]),
+      yearLogs = _d[0],
+      setYearLogs = _d[1]; //Methods
 
 
-var HomeWorkStats = function HomeWorkStats() {
-  //State
-  //Methods
-  //Template
+  react_1.useEffect(function () {
+    getThisWeekLogs();
+    getThisDayLogs();
+    getThisMonthLogs();
+    getThisYearLogs();
+  }, []);
+
+  var getThisDayLogs = function getThisDayLogs() {
+    var dateNow = new Date();
+    var getThisDay = dateNow.getDate();
+    var dayLogsOp = [];
+    userLogs.map(function (item) {
+      var itemDay = new Date(item.created_at).getDate();
+
+      if (itemDay === getThisDay) {
+        dayLogsOp.push(item);
+      }
+    });
+    setDayLogs(dayLogsOp);
+  };
+
+  var getThisWeekLogs = function getThisWeekLogs() {
+    var dateNow = new Date();
+    var getThisWeek = moment_1["default"](dateNow).week();
+    var weekLogsOp = [];
+    userLogs.map(function (item) {
+      var itemWeek = moment_1["default"](item.created_at).week();
+
+      if (itemWeek === getThisWeek) {
+        weekLogsOp.push(item);
+      }
+    });
+    setWeekLogs(weekLogsOp);
+  };
+
+  var getThisMonthLogs = function getThisMonthLogs() {
+    var dateNow = new Date();
+    var getThisMonth = dateNow.getMonth();
+    var monthLogsOp = [];
+    userLogs.map(function (item) {
+      var itemMonth = new Date(item.created_at).getMonth();
+
+      if (itemMonth === getThisMonth) {
+        monthLogsOp.push(item);
+      }
+    });
+    setMonthLogs(monthLogsOp);
+  };
+
+  var getThisYearLogs = function getThisYearLogs() {
+    var dateNow = new Date();
+    var getThisYear = dateNow.getFullYear();
+    var yearsLogsOp = [];
+    userLogs.map(function (item) {
+      var itemYear = new Date(item.created_at).getFullYear();
+
+      if (itemYear === getThisYear) {
+        yearsLogsOp.push(item);
+      }
+    });
+    setYearLogs(yearsLogsOp);
+  };
+
+  var calculateTime = function calculateTime(logsArray) {
+    var timeContainer = 0;
+    logsArray.map(function (item) {
+      var startDate = new Date(Date.parse(item.started_at)).getTime();
+      var endDate = new Date(Date.parse(item.end_at)).getTime();
+
+      if (endDate > 0) {
+        var timeDifference = endDate - startDate;
+        timeContainer = timeContainer + timeDifference;
+      }
+    });
+    var resultTime = new Date(timeContainer);
+    var daysHours = (resultTime.getDate() - 1) * 24;
+    var getHours = resultTime.getHours() - 1;
+    var resultHours = daysHours + getHours;
+    return resultHours + " hours and " + resultTime.getMinutes() + " minutes";
+  }; //Template
+
+
   return react_1["default"].createElement("article", {
     className: "work-stats col-span-3 py-4 px-8 border-l-2 border-gray-100"
   }, react_1["default"].createElement("h1", {
@@ -580,23 +700,39 @@ var HomeWorkStats = function HomeWorkStats() {
     className: "stat-list"
   }, react_1["default"].createElement("li", {
     className: "stat-list-item"
-  }, react_1["default"].createElement("p", null, react_1["default"].createElement("strong", null, "Today:"), " 3 Hours")), react_1["default"].createElement("li", {
+  }, react_1["default"].createElement("p", {
+    className: "text-sm"
+  }, react_1["default"].createElement("strong", {
+    className: "text-gray-100 text-md"
+  }, "Today: "), calculateTime(dayLogs))), react_1["default"].createElement("li", {
     className: "stat-list-item"
-  }, react_1["default"].createElement("p", null, react_1["default"].createElement("strong", null, "This Week:"), " 26 Hours")), react_1["default"].createElement("li", {
+  }, react_1["default"].createElement("p", {
+    className: "text-sm"
+  }, react_1["default"].createElement("strong", {
+    className: "text-gray-100 text-md"
+  }, "This Week: "), calculateTime(weekLogs))), react_1["default"].createElement("li", {
     className: "stat-list-item"
-  }, react_1["default"].createElement("p", null, react_1["default"].createElement("strong", null, "This Month:"), " 126 Hours")), react_1["default"].createElement("li", {
+  }, react_1["default"].createElement("p", {
+    className: "text-sm"
+  }, react_1["default"].createElement("strong", {
+    className: "text-gray-100 text-md"
+  }, "This Month: "), calculateTime(monthLogs))), react_1["default"].createElement("li", {
     className: "stat-list-item"
-  }, react_1["default"].createElement("p", null, react_1["default"].createElement("strong", null, "This Year:"), " 365 Hours"))), react_1["default"].createElement("h1", {
+  }, react_1["default"].createElement("p", {
+    className: "text-sm"
+  }, react_1["default"].createElement("strong", {
+    className: "text-gray-100 text-md"
+  }, "This Year: "), calculateTime(yearLogs)))), react_1["default"].createElement("h1", {
     className: "list-title"
   }, "Summary Stats:"), react_1["default"].createElement("ul", {
     className: "stat-list"
   }, react_1["default"].createElement("li", {
     className: "stat-list-item"
-  }, react_1["default"].createElement("p", null, react_1["default"].createElement("strong", null, "Hours:"), " 4322 Hours")), react_1["default"].createElement("li", {
-    className: "stat-list-item"
-  }, react_1["default"].createElement("p", null, react_1["default"].createElement("strong", null, "Days (pure Time):"), " 76 Days")), react_1["default"].createElement("li", {
-    className: "stat-list-item"
-  }, react_1["default"].createElement("p", null, react_1["default"].createElement("strong", null, "Month (pure Time):"), " 2 Month"))));
+  }, react_1["default"].createElement("p", {
+    className: "text-sm"
+  }, react_1["default"].createElement("strong", {
+    className: "text-gray-100 text-md"
+  }, "Hours:"), " ", calculateTime(userLogs)))));
 };
 
 exports.default = HomeWorkStats;
@@ -758,7 +894,7 @@ var MasterLayout = function MasterLayout(props) {
   }), react_1["default"].createElement("section", {
     className: "col-span-3 p-16"
   }, react_1["default"].createElement("article", {
-    className: "page-title mb-16"
+    className: "page-title mb-16 text-center bg-gray-900 p-16 rounded"
   }, react_1["default"].createElement("h1", {
     className: "text-6xl text-gray-100"
   }, title)), react_1["default"].createElement("article", {

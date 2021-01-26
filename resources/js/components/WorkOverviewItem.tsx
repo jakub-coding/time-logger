@@ -1,21 +1,18 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect} from 'react'
 import Moment from "react-moment";
 import MomentJS from "moment";
 
 //Interface Props
 interface Props {
 	logItem: any,
+	user: any,
 }
 
 const WorkOverviewItem: React.FC<Props> = props => {
-	const {logItem} = props;
-	//State
-	const [workPlan, setWorkPlan] = useState(8);
-	const [hoursSummary, setHoursSummary] = useState(0)
+	const {logItem, user} = props;
 
 	//Methods
 	useEffect(() => {
-		//console.log(logItem);
 		hoursSummaryHandle()
 	}, [])
 
@@ -105,7 +102,7 @@ const WorkOverviewItem: React.FC<Props> = props => {
 					</h1>
 				</div>
 				<div className="flex justify-end items-center">
-					<h1>Day Plan: {workPlan} Hours / Worked Hours: {summaryTimeFormatter()}</h1>
+					<h1>Day Plan: {user.daily_hours_plan} Hours / Worked Hours: {summaryTimeFormatter()}</h1>
 				</div>
 
 			</div>

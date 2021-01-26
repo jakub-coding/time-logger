@@ -9,15 +9,15 @@ import axios from "axios";
 //Interface Props
 interface Props {
 	userData: any, //eslint-disable-line
-	lastLogPhp: any,
+	userLastLog: any,
 }
 
 const HomeStartControls: React.FC<Props> = props => {
-	const {userData, lastLogPhp} = props;
+	const {userData, userLastLog} = props;
 
 	//State
 	const [statusOperator, setStatusOperator] = useState(Boolean);
-	const [lastLog, setLastLog] = useState<any>(lastLogPhp);
+	const [lastLog, setLastLog] = useState<any>(userLastLog);
 
 	//Methods
 	useEffect(() => {

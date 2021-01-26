@@ -1,37 +1,27 @@
-import React from "react";
+import React, {useEffect} from "react";
 
 //Interface Props
+interface Props {
+	user: any,
+}
 
-const HomeWorkPlans: React.FC = () => {
-	//State
 
-	//Methods
+const HomeWorkPlans: React.FC<Props> = props => {
+	const { user } = props;
 
 	//Template
 	return (
 		<article className="work-planner col-span-6 mt-8">
 
-			<div className="planner w-full mb-4">
-				<div className="title">
-					<h1 className="text-pink-800 font-bold text-xl">Working plan:</h1>
-				</div>
-				<div className="content flex justify-start items-center">
-					<ul className="flex justify-start items-center text-gray-100 ml-4">
-						<li className="mr-4"><h1><strong>Work week:</strong> Mo - Fr</h1></li>
-						<li className="mr-4"><h1><strong>Daily hours:</strong> 8 Hours</h1></li>
-						<li className="mr-4"><h1><strong>Weekly hours:</strong> 40 Hours</h1></li>
-					</ul>
-				</div>
-			</div>
-
 			<div className="reality w-full mb-4">
 				<div className="title">
-					<h1 className="text-pink-800 font-bold text-xl">Working average:</h1>
+					<h1 className="text-pink-800 font-bold text-xl">Work plan:</h1>
 				</div>
 				<div className="content flex justify-start items-center">
 					<ul className="flex justify-start items-center text-gray-100 ml-4">
-						<li className="mr-4"><h1><strong>Daily hours:</strong> 8 Hours <span className="text-green-500">(+2 Hours)</span></h1></li>
-						<li className="mr-4"><h1><strong>Weekly hours:</strong> 40 Hours <span className="text-red-500">(-3 Hours)</span></h1></li>
+						<li className="mr-4"><h1><strong>Work week:</strong> Mo-Fr </h1></li>
+						<li className="mr-4"><h1><strong>Daily:</strong> {user.daily_hours_plan} Hours </h1></li>
+						<li className="mr-4"><h1><strong>Weekly:</strong> {user.weekly_hours_plan} Hours </h1></li>
 					</ul>
 				</div>
 			</div>
