@@ -84,6 +84,7 @@ var WorkOverview = function WorkOverview(props) {
 
   react_1.useEffect(function () {
     sortDaysHandle();
+    console.log(userLogs);
   }, []);
 
   var sortDaysHandle = function sortDaysHandle() {

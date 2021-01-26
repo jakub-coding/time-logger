@@ -4,7 +4,7 @@ import MomentJS from "moment";
 //Interface Props
 interface Props {
 	user: any,
-	userLogs: any,
+	userLogs?: any,
 }
 
 

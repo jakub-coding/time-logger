@@ -11,8 +11,8 @@ import HomeWorkPlans from "../components/HomeWorkPlans";
 //Interface Props
 interface Props {
 	user: any; //eslint-disable-line
-	userLogs: any; //eslint-disable-line
-	userLastLog: any;
+	userLogs?: any; //eslint-disable-line
+	userLastLog?: any;
 	confirmationHandle: string;
 }
 

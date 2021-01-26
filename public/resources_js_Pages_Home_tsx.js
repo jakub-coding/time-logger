@@ -262,8 +262,12 @@ var HomeStartControls = function HomeStartControls(props) {
   }, []);
 
   var defineStatus = function defineStatus() {
-    if (lastLog.log_status) {
-      setStatusOperator(false);
+    if (userLastLog) {
+      if (lastLog.log_status) {
+        setStatusOperator(false);
+      } else {
+        setStatusOperator(true);
+      }
     } else {
       setStatusOperator(true);
     }
@@ -401,11 +405,13 @@ var HomeStartTimer = function HomeStartTimer(props) {
       setStatusOperator = _d[1];
 
   react_1.useEffect(function () {
-    if (lastLog.log_status) {
-      setTimer();
-      setStatusOperator(true);
-    } else {
-      setStatusOperator(false);
+    if (lastLog) {
+      if (lastLog.log_status) {
+        setTimer();
+        setStatusOperator(true);
+      } else {
+        setStatusOperator(false);
+      }
     }
   }, [lastLog]);
   react_1.useEffect(function () {

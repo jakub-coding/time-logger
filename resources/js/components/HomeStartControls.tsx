@@ -9,7 +9,7 @@ import axios from "axios";
 //Interface Props
 interface Props {
 	userData: any, //eslint-disable-line
-	userLastLog: any,
+	userLastLog?: any,
 }
 
 const HomeStartControls: React.FC<Props> = props => {
@@ -25,8 +25,12 @@ const HomeStartControls: React.FC<Props> = props => {
 	}, []);
 
 	const defineStatus = () => {
-		if(lastLog.log_status) {
-			setStatusOperator(false);
+		if(userLastLog) {
+			if(lastLog.log_status) {
+				setStatusOperator(false);
+			} else {
+				setStatusOperator(true);
+			}
 		} else {
 			setStatusOperator(true);
 		}

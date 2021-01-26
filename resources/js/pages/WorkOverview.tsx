@@ -16,6 +16,7 @@ const WorkOverview: React.FC<Props> = props => {
 	//Methods
 	useEffect(() => {
 		sortDaysHandle();
+		console.log(userLogs)
 	}, [])
 
 

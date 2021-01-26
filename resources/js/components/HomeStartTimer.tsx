@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react"
 
 interface Props {
-	lastLog: any,
+	lastLog?: any,
 }
 
 const HomeStartTimer: React.FC<Props> = props => {
@@ -15,11 +15,13 @@ const HomeStartTimer: React.FC<Props> = props => {
 	const [statusOperator, setStatusOperator] = useState(false)
 
 	useEffect(() => {
-		if(lastLog.log_status) {
-			setTimer();
-			setStatusOperator(true)
-		} else {
-			setStatusOperator(false)
+		if(lastLog) {
+			if(lastLog.log_status) {
+				setTimer();
+				setStatusOperator(true)
+			} else {
+				setStatusOperator(false)
+			}
 		}
 	}, [lastLog])
 

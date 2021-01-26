@@ -14,7 +14,7 @@ class pagesController extends Controller
 	{
 		$user = Auth::user();
 		$userLastLog = Logger::all()->where('user_id', $user->id)->last();
-		$userLogs = Logger::all()->where('user_id', $user->id);
+		$userLogs = Logger::where('user_id', $user->id)->get();
 
 		return Inertia::render('Home', [
     		'user' => $user,
@@ -26,7 +26,7 @@ class pagesController extends Controller
 	public function workOverview(): \Inertia\Response
 	{
 		$user = Auth::user();
-		$userLogs = Logger::all()->where('user_id', $user->id);
+		$userLogs = Logger::where('user_id', $user->id)->get();
 
 		return Inertia::render('WorkOverview', [
 			'user' => $user,
